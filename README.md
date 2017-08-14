@@ -1,1 +1,1 @@
-# dilipthakor.github.io/ui/index.html
+dilipthakor.github.io/ui/index.html
