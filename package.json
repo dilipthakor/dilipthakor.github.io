@@ -1,15 +1,24 @@
 {
-  "name": "imad-2016-base",
-  "version": "0.1.0",
-  "description": "IMAD 2016 course app",
+  "name": "imad",
+  "version": "1.0.0",
+  "description": "imad",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dilipthakor/imad.git"
   },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dilipthakor/imad/issues"
+  },
+  "homepage": "https://github.com/dilipthakor/imad#readme",
   "dependencies": {
-    "express": "^4.14.0",
-    "morgan": "^1.7.0"
+    "express": "^4.15.4",
+    "morgan": "^1.8.2"
   }
 }
