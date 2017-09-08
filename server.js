@@ -30,17 +30,17 @@ var articles ={
 	title: 'Artical Two : VD vadanaadr',
 	heading: 'Artical Two',
 	date:'10 sep, 2017',
-	content: ` 
+	content: `
 	<p>
-	     its me. boring !!!! lol. ture i am a boring person if hangout with me.This artical is about me. yes its me. boring !!!! lol. ture i am a boring person if hangout with meThis artical is about me. yes its me. boring !!!! lol. ture i am a boring person if hangout with meThis artical is about me. yes its me. boring !!!! lol. ture i am a boring person if hangout with me
+	     its me. boring !!!! lol. 
 	  </p>`
 	}
 
 };
-	
-	
 
-function createTemplate(data){	
+
+
+function createTemplate(data){
   var title=data.title;
   var date=data.date;
   var heading= data.heading;
@@ -84,14 +84,14 @@ app.get('/', function (req, res) {
 app.get('/ui/madi.png', function(req,res){
 	res.sendFile(path.join(__dirname,'ui','madi.png'));
 	});
-	
-	
+
+
 app.get('/ui/main.js', function(req,res){
 	res.sendFile(path.join(__dirname,'ui','main.js'));
 	});
-	
-app.get('/ui/style.css', function (req, res){		
-    res.sendFile(path.join(__dirname, 'ui', 'style.css'));	
+
+app.get('/ui/style.css', function (req, res){
+    res.sendFile(path.join(__dirname, 'ui', 'style.css'));
     });
 
 
