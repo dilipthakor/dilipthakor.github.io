@@ -16,64 +16,73 @@ img.onclick = function(){
 */
 
 
-
+//counter code
 var button = document.getElementById('counter');
-
 
 button.onclick = function(){
 
+// create request
+
 var request = new XMLHttpRequest();
 
+// capture the response and store it in a variable
+
 request.onreadystatechange = function(){
-
-	if(request.readystate === XMLHttpRequest.DONE){
-
-		if(request.status === 200){
+	if (request.readyState === XMLHttpRequest.DONE){
+		//take action
+		if (request.status === 200){
 			var counter = request.responseText;
 			var span = document.getElementById('count');
-			span.innerHtml = counter.toString();
+			span.innerHTML = counter.toString();
 		}
 	}
+	// Not done yet
 };
 
-	request.open('GET', 'http://localhost:8080/counter', true);
-	request.send(null);	
+	//make a request
+		request.open('GET', 'http://localhost:8080/counter', true);
+		request.send(null);
+		};
 
-};
 
-
+// submit name
 
 var submit = document.getElementById('submit_btn');
 
 submit.onclick = function(){
 
-	var request = new XMLHttpRequest();
+	 // create request
 
-    request.onreadystatechange = function(){
+	 var request = new XMLHttpRequest();
 
-	if(request.readystate === XMLHttpRequest.DONE){
+	 // capture the response and store it in a variable
 
-		if(request.status === 200){
-			var names = request.responseText;
-			names = JSON.parse(names);
-	var list = '';
+	 request.onreadystatechange = function(){
+	 	if (request.readyState === XMLHttpRequest.DONE){
+	 		//take action
+	 		if (request.status === 200){
+				//capture a list of name and render it as a list
+	 			var names = request.responseText;
+	 			names = JSON.parse(names);
+				var list = '';
 
-	for(var i=0; i < names.length; i++){
-		list += '<li>'+names[i]+ '</li>';
+				for (var i=0; i< names.length; i++){
+					list += '<li>' + names[i]+ '</li>';
 
-	}
+				}
+				var ul = document.getElementById('namelist');
+				ul.innerHTML = list;
 
-	var ul = document.getElementById('namelist');
-	ul.innerHTML = list;
-			
-		}
-	}
-  };
-  var nameInput= document.getElementById('name');
-  var name = nameInput.value;
-     
-	request.open('GET', 'http://localhost:8080/submit-name?name='+ name, true);
-	request.send(null);	
+	 		}
+	 	}
+	 	// Not done yet
+	 };
 
-	
+	 	//make a request
+		var nameInput = document.getElementById('name');
+		var name = nameInput.value;
+	 		request.open('GET', 'http://localhost:8080/submit-name?name=' + name, true);
+	 		request.send(null);
+
+
 };
