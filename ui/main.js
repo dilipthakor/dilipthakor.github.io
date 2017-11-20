@@ -40,7 +40,7 @@ request.onreadystatechange = function(){
 };
 
 	//make a request
-		request.open('GET', 'http://localhost:8080/counter', true);
+		request.open('GET', 'http://localhost:8081/counter', true);
 		request.send(null);
 		};
 
@@ -81,7 +81,7 @@ submit.onclick = function(){
 	 	//make a request
 		var nameInput = document.getElementById('name');
 		var name = nameInput.value;
-	 		request.open('GET', 'http://localhost:8080/submit-name?name=' + name, true);
+	 		request.open('GET', 'http://localhost:8081/submit-name?name=' + name, true);
 	 		request.send(null);
 
 

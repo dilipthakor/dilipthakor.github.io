@@ -1,42 +1,19 @@
 var express = require('express');
 var morgan = require('morgan');
 var path = require('path');
+var Pool = require('pg').Pool;
+
+var config = {
+	user:'postgres',
+	database:'postgres',
+	host:'localhost',
+	port: '5432',
+	password:'toor'
+};
 
 var app = express();
 app.use(morgan('combined'));
 
-
-var articles ={
-
-'artical-one': {
-	title: 'Artical One : Dilip Thakor',
-	heading: 'Artical One',
-	date:'5 sep, 2017',
-	content:`
-	<p>
-	rtical is about me.
-	  </p>`
-	},
-'artical-two': {
-	title: 'Artical Two : RD worman',
-	heading: 'Artical three',
-	date:'25 sep, 2017',
-	content: `
-	<p>
-	    his arti hangout with me
-	  </p>`
-	},
-'artical-three': {
-	title: 'Artical Two : VD vadanaadr',
-	heading: 'Artical Two',
-	date:'10 sep, 2017',
-	content: `
-	<p>
-	     its me. boring !!!! lol.
-	  </p>`
-	}
-
-};
 
 
 
@@ -65,7 +42,7 @@ function createTemplate(data){
     ${heading}
     </h3>
     </div>
-    ${date}
+    ${date.toDateString()}
     <div>
 	  ${content}
 	</div>
@@ -77,16 +54,25 @@ function createTemplate(data){
 return htmlTemplate;
 }
 
-
-
-
-
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
 
+var pool = new Pool(config);
+app.get('/test-db', function(req,res){
+	//make a select XMLHttpRequest
+	//return a response with the result
 
+  pool.query('SELECT *FROM test', function(err,result){
+	if(err){
+		res.status(500).send(err.toString());
+	}else{
+		res.send(JSON.stringify(result.rows));
+	}
+	});
+
+});
 
 
 
@@ -123,14 +109,31 @@ app.get('/ui/style.css', function (req, res){
     });
 
 
-app.get('/:articleName', function(req, res){
+app.get('/articles/:articleName', function(req, res){
 	//articalName == aritcal-one
-	var articleName = req.params.articleName;
-	res.send(createTemplate(articles[articleName]));
+	//articals[articalName] == 'artical-one'
+
+	//SELECT *FROM artical WHERE title = 'artical-one'
+
+	//pool.query("SELECT *FROM article WHERE title = '"+ req.params.articleName+  "'", function(err,result){
+	pool.query("SELECT *FROM article WHERE title = $1", [req.params.articleName], function(err,result){
+		if(err){
+			res.status(500).send(err.toString());
+		}else{
+			if(result.rows.length == 0){
+				res.status(404).send('Artical not found');
+			}else{
+				var articleData = result.rows[0];
+				res.send(createTemplate(articleData));
+			}
+		}
 	});
 
+});
 
-var port = 8080; // Use 8080 for local development because you might already have apache running on 80
-app.listen(8080, function () {
+
+
+var port = 8081; // Use 8080 for local development because you might already have apache running on 80
+app.listen(8081, function () {
   console.log(`IMAD course app listening on port ${port}!`);
 });
