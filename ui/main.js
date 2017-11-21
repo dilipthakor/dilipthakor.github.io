@@ -17,7 +17,7 @@ img.onclick = function(){
 
 
 //counter code
-var button = document.getElementById('counter');
+/** var button = document.getElementById('counter');
 
 button.onclick = function(){
 
@@ -43,9 +43,9 @@ request.onreadystatechange = function(){
 		request.open('GET', 'http://localhost:8081/counter', true);
 		request.send(null);
 		};
+**/
 
-
-// submit name
+// submit username/password to login
 
 var submit = document.getElementById('submit_btn');
 
@@ -61,28 +61,24 @@ submit.onclick = function(){
 	 	if (request.readyState === XMLHttpRequest.DONE){
 	 		//take action
 	 		if (request.status === 200){
-				//capture a list of name and render it as a list
-	 			var names = request.responseText;
-	 			names = JSON.parse(names);
-				var list = '';
-
-				for (var i=0; i< names.length; i++){
-					list += '<li>' + names[i]+ '</li>';
-
-				}
-				var ul = document.getElementById('namelist');
-				ul.innerHTML = list;
-
-	 		}
+				alert('Logged in Successfully');
+			}else if(request.status === 403) {
+				alert('Username or password id incorrect');
+			}else if ( request.status === 500){
+				alert('something went wrong on the server');
+			}
 	 	}
 	 	// Not done yet
 	 };
 
 	 	//make a request
-		var nameInput = document.getElementById('name');
-		var name = nameInput.value;
-	 		request.open('GET', 'http://localhost:8081/submit-name?name=' + name, true);
-	 		request.send(null);
+		var username = document.getElementById('username').value;
+		var password = document.getElementById('password').value;
+		console.log(username);
+		console.log(password);
+	 		request.open('POST', 'http://localhost:8081/login', true);
+			request.setRequestHeader('Content-Type', 'application/json');
+	 		request.send(JSON.stringify({username: username, password: password}));
 
 
 };
